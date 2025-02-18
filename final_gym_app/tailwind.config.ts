@@ -13,8 +13,18 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      fontFamily: {
+        edu: ['"Edu AU VIC WA NT Pre"', 'sans-serif'], // Usar el nombre exacto de la fuente entre comillas dobles
+      },
+      fontSize: {
+        'size-4.5':'4.5rem',
+        'size-2.5': '2.5rem', // Tamaño personalizado
+        'size-1.5': '1.5rem', // Tamaño personalizado
+        'size-1':'1rem',
+      },
     },
   },
   plugins: [],
 };
 export default config;
+
