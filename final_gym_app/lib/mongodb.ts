@@ -33,7 +33,7 @@ export async function connectToDatabase() {
   try {
     // Attempt to connect (clientPromise already ensures the connection process)
     await clientPromise;
-    return client;
+    return client.db("app_gym");
   } catch (error) {
     throw new Error("Error connecting to MongoDB");
   }
