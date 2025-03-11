@@ -31,12 +31,16 @@ if (process.env.NODE_ENV === "development") {
 // Create a function that can be imported elsewhere
 export async function connectToDatabase() {
   try {
-    // Attempt to connect (clientPromise already ensures the connection process)
     await clientPromise;
     return client.db("app_gym");
-  } catch (error) {
-    throw new Error("Error connecting to MongoDB");
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("Error al conectar con MongoDB:", error.message);  // Error correctamente tipificado
+      throw new Error(`Error connecting to MongoDB: ${error.message}`);
+    } else {
+      console.error("Error desconocido:", error);
+      throw new Error("Error desconocido al conectar con MongoDB");
+    }
   }
 }
-
 export default client;

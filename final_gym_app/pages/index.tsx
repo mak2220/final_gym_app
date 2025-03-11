@@ -1,5 +1,5 @@
-import {useEffect} from "react";
-import Image from "next/image";
+// import {useEffect} from "react";
+// import Image from "next/image";
 import Link from "next/link";
 import { Inter } from "next/font/google";
 import client from "@/lib/mongodb";
@@ -44,7 +44,7 @@ export default function Home({
           Conocenos, ve ejemplos de ejercios, nuestras rutinas y horarios, registra tu progreso
         </p>
         
-        <Link href="/registro">
+        <Link href="/login">
           <h1 className="px-3 py-2 border-2 bg-yellow-500 border-black text-black font-semibold rounded-lg hover:bg-black hover:text-yellow-500 hover:border-yellow-500 transition duration-200 lg:px-6 lg:py-3">
             Ingresa o Regístrate Ahora
           </h1>

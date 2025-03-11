@@ -1,7 +1,5 @@
-"use client";
-
 import { useAuth } from "@/context/AuthContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import { Home, Users, BarChart3, Calendar, LogOut } from "lucide-react";
@@ -23,6 +21,16 @@ const data = [
 export default function Dashboard() {
   const { user, logout } = useAuth();
   const router = useRouter();
+  const [username, setUsername] = useState(null);
+
+  useEffect(() => {
+    if (router.isReady) {
+      const query = router.query;
+      if (query.username) {
+        setUsername(query.username); // Aquí eliminamos el `as string`
+      }
+    }
+  }, [router.isReady, router.query]);
 
   useEffect(() => {
     if (!user) {
@@ -30,7 +38,7 @@ export default function Dashboard() {
     }
   }, [user, router]);
 
-  if (!user) return null;
+  if (!user || !username) return <div>Cargando...</div>; // Verificamos si el 'username' está listo
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -55,10 +63,10 @@ export default function Dashboard() {
           </Button>
         </nav>
       </aside>
-
+      
       {/* Main Content */}
       <main className="flex-1 p-6 space-y-6">
-        <h1 className="text-2xl font-bold">Bienvenido, {user.name}</h1>
+        <h1 className="text-2xl font-bold text-gray-700">Bienvenido, {username}</h1> {/* Mostrar username desde la URL */}
         
         {/* Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -88,4 +96,3 @@ export default function Dashboard() {
     </div>
   );
 }
-

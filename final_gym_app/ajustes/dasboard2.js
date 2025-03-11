@@ -9,7 +9,6 @@ export default function Dashboard() {
   const router = useRouter();
 
   useEffect(() => {
-    console.log("Estado actual del usuario:", user);
     if (!user) {
       router.push("/login");
     }
@@ -20,7 +19,7 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
       <h1 className="text-3xl font-bold text-gray-700">
-        Bienvenido, {user.nombre}
+        Bienvenido, {user.username}
       </h1>
       <button 
         onClick={logout} 

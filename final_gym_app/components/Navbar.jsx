@@ -3,8 +3,12 @@
 import React, { useState } from 'react';
 import Link from "next/link";
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
+import { useRouter } from 'next/router'; // Importar useRouter
 
 const Navbar = () => {
+  // Hook para acceder a la ruta actual
+  const router = useRouter();
+  
   // State to manage the navbar's visibility
   const [nav, setNav] = useState(false);
 
@@ -23,6 +27,11 @@ const Navbar = () => {
     { id: 6, text: 'Testimonios', route: "/testimonios" },
     { id: 7, text: 'Contacto', route: "/contacto" },
   ];
+
+  // Condición para no renderizar el Navbar en páginas específicas (por ejemplo, /dashboard1)
+  if (router.pathname === '/dashboard1') {
+    return null; // No renderiza el Navbar si la ruta es /dashboard1
+  }
 
   return (
     <div className='bg-black w-full flex justify-between items-center h-24 px-4 text-white'>
@@ -54,7 +63,6 @@ const Navbar = () => {
             ? 'fixed md:hidden left-0 top-0 w-auto h-auto rounded-b-lg border-r border-r-gray-900 bg-[#000300] ease-in-out duration-500 z-50'
             : 'ease-in-out w-auto duration-500 fixed top-0 bottom-0 left-[-100%]'
         }
-        // w-[60%]
       >
         {/* Mobile Logo */}
         <h1 className='w-full text-3xl font-bold text-[#00df9a] m-4'>Gym App</h1>

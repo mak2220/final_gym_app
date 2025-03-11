@@ -17,11 +17,9 @@ export default async function handler(req, res) {
 
   try {
     console.log("Conectando a la base de datos...");
-    // const client = await connectToDatabase();
     const db = await connectToDatabase();
     console.log("Conexión exitosa.");
 
-    // const db = client.db();
     const user = await db.collection('usuarios').findOne({ email });
 
     if (!user) {
@@ -29,7 +27,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ message: 'El correo no está registrado' });
     }
 
-    console.log("Usuario encontrado:", { email: user.email, passwordHash: user.password });
+    console.log("Usuario encontrado:", { email: user.email, passwordHash: user.password, nombre: user.nombre });
 
     // Verificamos si la contraseña ingresada coincide con la encriptada en la base de datos
     const passwordMatch = await bcrypt.compare(password, user.password);
@@ -46,7 +44,7 @@ export default async function handler(req, res) {
 
     // Crear un JWT (JSON Web Token)
     const token = jwt.sign(
-      { userId: user._id, email: user.email },
+      { userId: user._id, email: user.email, nombre: user.nombre }, // Incluimos 'nombre' en el JWT
       process.env.JWT_SECRET, 
       { expiresIn: '1h' }
     );
@@ -68,7 +66,7 @@ export default async function handler(req, res) {
 
     return res.status(200).json({ 
       message: 'Inicio de sesión exitoso', 
-      user: { id: user._id, email: user.email, name: user.name }
+      user: { id: user._id, email: user.email, nombre: user.nombre } // Devolvemos 'nombre' en la respuesta
     });
 
   } catch (error) {
@@ -76,4 +74,5 @@ export default async function handler(req, res) {
     return res.status(500).json({ message: 'Error en el servidor', error: error.message });
   }
 }
+
 

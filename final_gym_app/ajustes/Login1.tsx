@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
@@ -9,24 +9,20 @@ export default function LoginForm() {
   const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [nombre, setNombre] = useState(""); // Ahora es obligatorio
   const [error, setError] = useState("");
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const success = await login(email, password, nombre); // ✅ Ahora espera un booleano
-      if (success) {
-        router.push("/dashboard1");
-      } else {
-        setError("Credenciales incorrectas");
+      const user = await login(email, password, username); // No se envía el username por URL
+      if (user) {
+        router.push("/dashboard1"); // Redirige sin username en la URL
       }
     } catch (error: any) {
       setError(error.message || "Error al iniciar sesión");
     }
   };
-  
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -34,16 +30,6 @@ export default function LoginForm() {
         <h2 className="text-2xl font-bold text-center text-gray-700">Iniciar Sesión</h2>
         {error && <div className="text-red-500 text-center">{error}</div>}
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-600">Nombre de Usuario</label>
-            <input
-              type="text"
-              className="text-black w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-              value={nombre}
-              onChange={(e) => setNombre(e.target.value)}
-              required
-            />
-          </div>
           <div>
             <label className="block text-sm font-medium text-gray-600">Correo Electrónico</label>
             <input

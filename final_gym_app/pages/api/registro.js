@@ -13,8 +13,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const client = await connectToDatabase();
-    const db = client.db('app_gym');  // Especifica el nombre de tu base de datos
+    const db = await connectToDatabase();
 
     const existingUser = await db.collection('usuarios').findOne({ email });
 
