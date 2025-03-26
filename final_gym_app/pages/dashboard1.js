@@ -3,6 +3,7 @@
 import { useAuth } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Observaciones from "@/components/Observaciones";
 
 export default function Dashboard() {
   const { user, logout } = useAuth();
@@ -40,17 +41,18 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <navbar>
-        <div className='bg-black w-full flex justify-between items-center h-24 px-4 text-white'>
-              {/* Logo */}
-              <h1 className='w-full text-3xl font-bold text-[#00df9a]'>Gym App.</h1>
+        <div className="bg-black w-full flex flex-col md:flex-row justify-between items-center h-auto md:h-24 px-4 text-white space-y-4 md:space-y-0">
+          {/* Logo */}
+          <h1 className="w-full text-3xl font-bold text-[#00df9a] text-center md:text-left">Gym App.</h1>
+          <h2 className="text-2xl font-semibold text-white-800 text-center md:text-left">
+            Bienvenid@, {userData?.nombre.charAt(0).toUpperCase() + userData?.nombre.slice(1)} 👋
+          </h2>
+          <p className="text-center md:text-left">Aquí tienes tu información personalizada.</p>
         </div>
       </navbar>
+  
       <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-6">
-        <h2 className="text-2xl font-semibold text-gray-800">
-          Bienvenido, {userData?.nombre} 👋
-        </h2>
-        <p className="text-gray-600">Aquí tienes tu información personalizada.</p>
-
+        
         {/* Sección de Membresía */}
         <div className="mt-6 p-4 border rounded-lg bg-blue-50">
           <h3 className="text-lg font-semibold text-blue-700">Membresía</h3>
@@ -98,7 +100,9 @@ export default function Dashboard() {
             ))}
           </ul>
         </div>
-
+         {/* Sección de Observaciones */}
+        <Observaciones userId={userData?.email} />
+        
         <button 
           onClick={logout} 
           className="mt-6 w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition"
