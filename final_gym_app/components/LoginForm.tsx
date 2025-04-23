@@ -29,7 +29,7 @@ export default function LoginForm() {
   
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen">
       <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-md rounded-xl">
         <h2 className="text-2xl font-bold text-center text-gray-700">Iniciar Sesión</h2>
         {error && <div className="text-red-500 text-center">{error}</div>}
@@ -68,9 +68,10 @@ export default function LoginForm() {
             Iniciar Sesión
           </button>
         </form>
-        <p className="text-sm text-center text-gray-600">
-          ¿No tienes una cuenta? <Link href="/registro" className="text-blue-500 hover:underline">Regístrate</Link>
-        </p>
+        <div className="text-sm text-center text-gray-600">
+          <p>¿Olvidaste tu <Link href="/recuperar" className="text-blue-500 hover:underline">usuario o contraseña</Link>?</p>
+          <p>¿No tienes una cuenta? <Link href="/registro" className="text-blue-500 hover:underline">Regístrate</Link></p>
+        </div>
       </div>
     </div>
   );
