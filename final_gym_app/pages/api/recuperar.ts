@@ -40,7 +40,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const baseUrl =
       process.env.NODE_ENV === 'development'
         ? 'http://localhost:3000'
-        : 'https://tusitio.com';
+        : 'https://gymapp-gym.vercel.app';
 
     // Construir el enlace de restablecimiento
     const link = `${baseUrl}/restablecer?token=${token}`;
