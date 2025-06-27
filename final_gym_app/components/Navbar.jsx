@@ -24,13 +24,16 @@ const Navbar = () => {
     { id: 3, text: 'Horarios', route: "/horarios" },
     { id: 4, text: 'Rutinas', route: "/rutinas" },
     { id: 5, text: 'Ejemplos', route: "/ejemplos" },
-    { id: 6, text: 'Testimonios', route: "/testimonios" },
-    { id: 7, text: 'Contacto', route: "/contacto" },
+    { id: 6, text: 'Contacto', route: "/contacto" },
+    { id: 7, text: 'Administradores', route: "/admin" },
   ];
 
-  // Condición para no renderizar el Navbar en páginas específicas (por ejemplo, /dashboard1)
-  if (router.pathname === '/dashboard1') {
-    return null; // No renderiza el Navbar si la ruta es /dashboard1
+  if (
+  router.pathname === '/dashboard1' ||
+  router.pathname === '/admin' ||
+  router.pathname.startsWith('/admin/')
+  ) {
+  return null;
   }
 
   return (

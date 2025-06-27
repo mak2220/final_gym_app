@@ -1,16 +1,19 @@
 // Button.tsx
 
-import React from 'react';
+import React, { ButtonHTMLAttributes } from 'react';
 
-interface ButtonProps {
-  children: React.ReactNode;
-  onClick?: () => void;
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'ghost' | 'solid';
-  className?: string;
 }
 
-export const Button: React.FC<ButtonProps> = ({ children, onClick, variant = 'solid', className = '' }) => {
-  const baseStyles = 'w-full flex items-center space-x-2 py-2 px-4 rounded-md transition-all duration-200';
+export const Button: React.FC<ButtonProps> = ({
+  children,
+  variant = 'solid',
+  className = '',
+  ...props
+}) => {
+  const baseStyles =
+    'w-full flex items-center justify-center space-x-2 py-2 px-4 rounded-md transition-all duration-200';
   const variantStyles =
     variant === 'ghost'
       ? 'text-gray-800 hover:bg-gray-200'
@@ -18,8 +21,8 @@ export const Button: React.FC<ButtonProps> = ({ children, onClick, variant = 'so
 
   return (
     <button
-      onClick={onClick}
       className={`${baseStyles} ${variantStyles} ${className}`}
+      {...props}
     >
       {children}
     </button>
