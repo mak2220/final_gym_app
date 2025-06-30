@@ -8,9 +8,9 @@ import PasswordInput from "@/components/PasswordInput";
 
 export default function LoginForm() {
   const { login } = useAuth();
-  const [email, setEmail] = useState("cliente@demo.com");
-  const [password, setPassword] = useState("123456");
-  const [nombre, setNombre] = useState("DemoCliente"); 
+  const [email, setEmail] = useState("demo@cliente.com");
+  const [password, setPassword] = useState("pruebaCliente2");
+  const [nombre, setNombre] = useState("Cliente Demo"); 
   const [error, setError] = useState("");
   const [passwordError, setPasswordError] = useState(""); 
 
