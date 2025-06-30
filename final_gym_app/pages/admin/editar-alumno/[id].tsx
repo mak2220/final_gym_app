@@ -275,89 +275,115 @@ const EditarAlumno = () => {
           <label className="block">Observaciones</label>
           <textarea name="observaciones" className="text-black w-full p-2 border" value={alumno.observaciones} onChange={handleChange} />
         </div>
-        <div>
-          <label className="block font-semibold text-lg mb-2">Rutina</label>
-          {alumno.rutina.map((dia, i) => {
-            const isActive = diasActivos.includes(i);
-            return (
-              <div key={i} className="mb-4 overflow-hidden transition-all duration-500 ease-in-out border rounded">
-                <div className="flex justify-between items-center bg-blue-600 text-center hover:bg-blue-700 p-2 cursor-pointer" onClick={() => toggleDiaActivo(i)}>
-                  <span className="font-semibold text-white">{dia.dia || `Día ${i + 1}`}</span>
-                  <span className="text-xl">{isActive ? '−' : '+'}</span>
-                </div>
-                <div
-                  className={`transition-all duration-500 ease-in-out overflow-hidden`}
-                  style={{
-                    maxHeight: isActive ? '1000px' : '0',
-                    padding: isActive ? '16px' : '0 16px',
-                    opacity: isActive ? 1 : 0,
-                    }}
-                  >
-                {dia.ejercicios.map((ejercicio, j) => (
-                    <div key={j} className="flex items-center gap-2 mb-1">
-                      <input
-                        type="number"
-                      className="text-black p-1 border w-[60px] text-center"
-                        value={typeof ejercicio.orden === 'number' ? ejercicio.orden : j + 1}
-                        onChange={(e) => {
-                          const newValue = parseInt(e.target.value, 10);
-                          if (!isNaN(newValue)) {
-                            handleEjercicioChange(i, j, 'orden', newValue);
-                          }
-                        }}
-                        placeholder="#"
-                      />
-
-                      <input
-                        className="text-black p-1 border w-1/3 text-center"
-                        value={ejercicio.nombre}
-                        onChange={(e) => handleEjercicioChange(i, j, 'nombre', e.target.value)}
-                        placeholder="Nombre del ejercicio"
-                      />
-                      <input
-                        className="text-black p-1 border flex-1 text-center"
-                        value={ejercicio.descripcion}
-                        onChange={(e) => handleEjercicioChange(i, j, 'descripcion', e.target.value)}
-                        placeholder="Repeticiones (ej: 4x10)"
-                      />
-                      <div className="relative group">
-                        <Button
-                          type="button"
-                          onClick={() => eliminarEjercicio(i, j)}
-                          className="bg-red-600 hover:bg-red-700 w-[10px]"
-                        >
-                          ×
-                        </Button>
-                        <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-black text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                          Eliminar ejercicio
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                  <div className="flex flex-col sm:flex-row justify-center gap-4 mt-4">
-                    <Button
-                      type="button"
-                      onClick={() => agregarEjercicio(i)}
-                      className="w-full sm:w-1/2"
-                    >
-                      + Añadir ejercicio
-                    </Button>
-                    <Button
-                      type="button"
-                      onClick={() => eliminarDia(i)}
-                      className="w-full sm:w-1/2 bg-red-500 hover:bg-red-600 text-white"
-                    >
-                      Eliminar día
-                    </Button>
-                  </div>
-                </div>
-          </div>
-        );
-      })}
-          <Button type="button" onClick={agregarDia} className="mt-4 bg-green-600 hover:bg-green-700 text-white">
-            + Añadir día
-          </Button>
+        <div className="px-2">
+  <label className="block font-semibold text-lg mb-2">Rutina</label>
+  {alumno.rutina.map((dia, i) => {
+    const isActive = diasActivos.includes(i);
+    return (
+      <div
+        key={i}
+        className="mb-4 overflow-hidden transition-all duration-500 ease-in-out border rounded"
+      >
+        <div
+          className="flex justify-between items-center bg-blue-600 hover:bg-blue-700 px-3 py-2 cursor-pointer"
+          onClick={() => toggleDiaActivo(i)}
+        >
+          <span className="font-semibold text-white text-sm sm:text-base">
+            {dia.dia || `Día ${i + 1}`}
+          </span>
+          <span className="text-xl text-white">{isActive ? '−' : '+'}</span>
         </div>
+
+        <div
+          className={`transition-all duration-500 ease-in-out overflow-hidden bg-white`}
+          style={{
+            maxHeight: isActive ? '1000px' : '0',
+            padding: isActive ? '16px' : '0 16px',
+            opacity: isActive ? 1 : 0,
+          }}
+        >
+          {dia.ejercicios.map((ejercicio, j) => (
+            <div
+              key={j}
+              className="flex flex-col sm:flex-row items-center gap-2 mb-3"
+            >
+              <input
+                type="number"
+                className="text-black p-2 border w-full sm:w-[60px] text-center text-sm"
+                value={
+                  typeof ejercicio.orden === 'number' ? ejercicio.orden : j + 1
+                }
+                onChange={(e) => {
+                  const newValue = parseInt(e.target.value, 10);
+                  if (!isNaN(newValue)) {
+                    handleEjercicioChange(i, j, 'orden', newValue);
+                  }
+                }}
+                placeholder="#"
+              />
+
+              <input
+                className="text-black p-2 border w-full sm:w-1/3 text-center text-sm"
+                value={ejercicio.nombre}
+                onChange={(e) =>
+                  handleEjercicioChange(i, j, 'nombre', e.target.value)
+                }
+                placeholder="Nombre del ejercicio"
+              />
+
+              <input
+                className="text-black p-2 border w-full sm:flex-1 text-center text-sm"
+                value={ejercicio.descripcion}
+                onChange={(e) =>
+                  handleEjercicioChange(i, j, 'descripcion', e.target.value)
+                }
+                placeholder="Repeticiones (ej: 4x10)"
+              />
+
+              <div className="relative group">
+                <Button
+                  type="button"
+                  onClick={() => eliminarEjercicio(i, j)}
+                  className="bg-red-600 hover:bg-red-700 w-[30px] h-[30px] text-white p-0"
+                >
+                  ×
+                </Button>
+                <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-black text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                  Eliminar ejercicio
+                </span>
+              </div>
+            </div>
+          ))}
+
+          <div className="flex flex-col sm:flex-row justify-center gap-3 mt-4">
+            <Button
+              type="button"
+              onClick={() => agregarEjercicio(i)}
+              className="w-full sm:w-1/2 text-sm"
+            >
+              + Añadir ejercicio
+            </Button>
+            <Button
+              type="button"
+              onClick={() => eliminarDia(i)}
+              className="w-full sm:w-1/2 bg-red-500 hover:bg-red-600 text-white text-sm"
+            >
+              Eliminar día
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  })}
+  <Button
+    type="button"
+    onClick={agregarDia}
+    className="mt-4 bg-green-600 hover:bg-green-700 text-white w-full text-sm"
+  >
+    + Añadir día
+  </Button>
+</div>
+
         <Button type="submit">Guardar Cambios y Retornar Menu General</Button>
       </form>
       {alertVisible && (
