@@ -20,7 +20,7 @@ export default function LoginPage() {
       {showModal && (
               <AlertModal
                 title="¡Bienvenido a Gym App!"
-                message="En esta sección podras ingresar a tu cuenta única para ver las rutinas que tu profes@r establecio para tí. Para esta prueba solo debes hacer clic en `Iniciar Sesión`"
+                message="En esta sección los alumnos podran ingresar a su cuenta única para ver las rutinas que el profes@r establecio. Para esta prueba solo debes hacer clic en `Iniciar Sesión`"
                 onClose={handleCloseModal}
               />
             )}

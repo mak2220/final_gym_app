@@ -46,7 +46,7 @@ export default function Dashboard() {
           setAlertContent({
             title: "¡Bienvenido!",
             message:
-              "Aquí tus alumnos verán las rutinas que preparaste para ell@s. Si quieres las puedes modificar desde la página de inicio, en la barra de tareas haciendo click en 'Administración'. Incluso se puden mostrar videos de como realizar los ejercicios. Para salir solo haz click en 'Cerrar Sesión' al fondo de la página.",
+              "Aquí tus alumnos verán las rutinas que preparaste para ell@s. Si quieres las puedes modificar desde la página de inicio, en la barra de tareas haciendo click en 'Administración'. Incluso pudes mostrar videos de como realizar los ejercicios. Para salir solo haz click en 'Cerrar Sesión' al final de la página.",
           });
         }
       } catch (error) {
@@ -157,7 +157,7 @@ export default function Dashboard() {
                     className="w-full text-left py-2 px-4 bg-red-100 hover:bg-red-200 rounded-md transition flex justify-between items-center"
                     onClick={() => setOpenIndex(openIndex === index ? null : index)}
                   >
-                    {dia.dia}
+                    {`Día ${index + 1}`}
                     <span>{openIndex === index ? "▲" : "▼"}</span>
                   </button>
                   {openIndex === index &&
@@ -183,6 +183,30 @@ export default function Dashboard() {
               ))}
             </ul>
           </div>
+          {/* Ejemplos de Ejercicios */}
+          <div className="mt-6 p-4 border rounded-lg bg-purple-50">
+            <h3 className="text-lg font-semibold text-purple-700">Ejemplos de Ejercicios</h3>
+
+            {Array.isArray(userData.ejemplos) && userData.ejemplos.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+                {userData.ejemplos.map((video, idx) => (
+                  <div key={idx} className="aspect-video">
+                    <iframe
+                      src={video.src}
+                      title={video.title}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className="w-full h-full rounded border"
+                    ></iframe>
+                    <p className="text-sm text-center mt-1 text-gray-700">{video.title}</p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-gray-500 mt-2">No hay videos cargados aún.</p>
+            )}
+          </div>
+
 
           {/* Observaciones */}
           <Observaciones userId={userData.email} />
