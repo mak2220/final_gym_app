@@ -46,7 +46,7 @@ const estadosMembresia = ['Activa', 'Vencida', 'Pendiente', 'Suspendida'];
 const EditarAlumno = () => {
   const router = useRouter();
   const { id } = router.query;
-
+  const [loading, setLoading] = useState(true);
   const [alumno, setAlumno] = useState<Alumno>({
     nombre: '',
     email: '',
@@ -180,8 +180,9 @@ const EditarAlumno = () => {
   };
 
   useEffect(() => {
-    if (id) {
-      axios.get(`/api/alumnos/${id}`).then((res) => {
+  if (id) {
+    axios.get(`/api/alumnos/${id}`)
+      .then((res) => {
         const data = res.data;
         setAlumno({
           ...data,
@@ -198,28 +199,43 @@ const EditarAlumno = () => {
             imc: data.progreso?.imc || '',
           },
           rutina: Array.isArray(data.rutina)
-  ? data.rutina.map((dia: any) => ({
-      dia: dia.dia || '',
-      ejercicios: Array.isArray(dia.ejercicios)
-        ? dia.ejercicios.map((ej: any, idx: number) => ({
-            nombre: ej.nombre || '',
-            descripcion: ej.descripcion || '',
-            orden: typeof ej.orden === 'number' ? ej.orden : idx + 1,
-          }))
-        : Object.entries(dia)
-            .filter(([key]) => key !== 'dia')
-            .map(([nombre, descripcion], idx) => ({
-              nombre,
-              descripcion,
-              orden: idx + 1,
-            })),
-    }))
-  : [],
-        observaciones: data.observaciones || '',
+            ? data.rutina.map((dia: any) => ({
+                dia: dia.dia || '',
+                ejercicios: Array.isArray(dia.ejercicios)
+                  ? dia.ejercicios.map((ej: any, idx: number) => ({
+                      nombre: ej.nombre || '',
+                      descripcion: ej.descripcion || '',
+                      orden: typeof ej.orden === 'number' ? ej.orden : idx + 1,
+                    }))
+                  : Object.entries(dia)
+                      .filter(([key]) => key !== 'dia')
+                      .map(([nombre, descripcion], idx) => ({
+                        nombre,
+                        descripcion,
+                        orden: idx + 1,
+                      })),
+              }))
+            : [],
+          observaciones: data.observaciones || '',
         });
+      })
+      .catch((error) => {
+        console.error('Error al cargar datos:', error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
-    }
-  }, [id]);
+  }
+}, [id]);
+
+if (loading) {
+  return (
+    <div className="flex justify-center items-center h-screen text-xl text-white bg-black">
+      Cargando datos del alumno...
+    </div>
+  );
+}
+
 
   return (
     <div className="p-4 max-w-3xl mx-auto">
