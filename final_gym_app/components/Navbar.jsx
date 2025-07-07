@@ -54,12 +54,15 @@ const Navbar = () => {
         ))}
       </ul>
 
-      {/* Mobile Navigation Icon */}
-      <div onClick={handleNav} className='block md:hidden'>
-        {nav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}
-      </div>
+      {/* Mobile Navigation Icon (solo el botón de abrir) */}
+      {!nav && (
+        <div onClick={handleNav} className='block md:hidden'>
+          <AiOutlineMenu size={20} />
+        </div>
+      )}
 
-      {/* Mobile Navigation Menu */}
+
+            {/* Mobile Navigation Menu */}
       <ul
         className={
           nav
@@ -74,11 +77,26 @@ const Navbar = () => {
         {navItems.map(item => (
           <li
             key={item.id}
-            className='p-4 border-b rounded-xl  border-gray-600'
+            className='p-4 border-b rounded-xl border-gray-600'
           >
-            <Link href={item.route} className='px-4 py-2 rounded-xl hover:bg-[#00df9a] duration-300 hover:text-black cursor-pointer'>{item.text}</Link>
+            <Link
+              href={item.route}
+              className={`px-4 py-2 rounded-xl duration-300 cursor-pointer ${
+                item.text === 'Administradores'
+                  ? 'bg-[#00df9a] text-black font-semibold'
+                  : 'hover:bg-[#00df9a] hover:text-black'
+              }`}
+            >
+              {item.text}
+            </Link>
           </li>
         ))}
+        {/* Close Button moved to the bottom */}
+        <div className="flex justify-center p-4">
+          <button onClick={handleNav} aria-label="Cerrar menú">
+            <AiOutlineClose size={24} className="text-white hover:text-red-500 transition-colors" />
+          </button>
+        </div>
       </ul>
     </div>
   );
